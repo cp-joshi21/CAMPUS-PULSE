@@ -1,3 +1,4 @@
+
 # CampusPulse
 
 > **Everything happening on your campus. One intelligent place.**
@@ -134,3 +135,7 @@ npm run build
 - **Request Validation & Error Shielding:** Raw inputs are validated and sanitized server-side. Internal error stack traces are never sent to the client.
 - **Cold-Start Resilience:** Serverless handlers verify configuration gracefully and return HTTP 503 with user-friendly notices when environment variables are pending.
 
+=======
+# CAMPUS-PULSE
+Students platform
+>>>>>>> origin/main
