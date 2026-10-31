@@ -1,0 +1,2 @@
+# CAMPUS-PULSE
+Students platform
