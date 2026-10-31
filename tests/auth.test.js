@@ -1,11 +1,14 @@
 /**
  * CampusPulse Authentication and Token Security Tests
  * Verifies Bearer token extraction, user identity mapping,
- * demo token structure, and ownership authorization.
+ * demo token structure, ownership authorization, error translations,
+ * and form validation contracts.
  */
 
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
+import { mapFirebaseAuthError } from '../src/js/firebase.js';
+import { AuthStore } from '../src/js/auth.js';
 
 describe('CampusPulse Authentication and Security Rules', () => {
   function parseBearerToken(authHeader) {
@@ -114,5 +117,142 @@ describe('CampusPulse Authentication and Security Rules', () => {
 
     assert.equal(serverEnforcedTask.userId, 'real-student-456');
     assert.notEqual(serverEnforcedTask.userId, untrustedClientBody.task.userId);
+  });
+});
+
+describe('CampusPulse Firebase Error Translation & Mapping', () => {
+  it('translates invalid credential errors to safe user-friendly text', () => {
+    const msg1 = mapFirebaseAuthError({ code: 'auth/invalid-credential' });
+    assert.match(msg1, /incorrect email or password/i);
+
+    const msg2 = mapFirebaseAuthError({ code: 'auth/wrong-password' });
+    assert.match(msg2, /incorrect email or password/i);
+
+    const msg3 = mapFirebaseAuthError({ code: 'auth/user-not-found' });
+    assert.match(msg3, /incorrect email or password/i);
+  });
+
+  it('translates duplicate account registration errors properly', () => {
+    const msg = mapFirebaseAuthError({ code: 'auth/email-already-in-use' });
+    assert.match(msg, /already exists/i);
+  });
+
+  it('translates weak password and email formatting errors', () => {
+    const weak = mapFirebaseAuthError({ code: 'auth/weak-password' });
+    assert.match(weak, /at least 6 characters/i);
+
+    const invalidEmail = mapFirebaseAuthError({ code: 'auth/invalid-email' });
+    assert.match(invalidEmail, /valid email address/i);
+  });
+
+  it('translates rate-limiting and disabled account errors safely', () => {
+    const throttled = mapFirebaseAuthError({ code: 'auth/too-many-requests' });
+    assert.match(throttled, /temporarily disabled/i);
+
+    const disabled = mapFirebaseAuthError({ code: 'auth/user-disabled' });
+    assert.match(disabled, /account has been disabled/i);
+  });
+
+  it('translates popup and network failures safely', () => {
+    const network = mapFirebaseAuthError({ code: 'auth/network-request-failed' });
+    assert.match(network, /network connection error/i);
+
+    const cancelled = mapFirebaseAuthError({ code: 'auth/popup-closed-by-user' });
+    assert.match(cancelled, /cancelled/i);
+  });
+});
+
+describe('CampusPulse Authentication Form Validation Rules', () => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  it('validates university email formats correctly', () => {
+    assert.equal(emailRegex.test('student@campus.edu'), true);
+    assert.equal(emailRegex.test('prof.miller@university.ac.in'), true);
+    assert.equal(emailRegex.test(''), false);
+    assert.equal(emailRegex.test('not-an-email'), false);
+    assert.equal(emailRegex.test('student@'), false);
+    assert.equal(emailRegex.test('@campus.edu'), false);
+    assert.equal(emailRegex.test('spaces in@campus.edu'), false);
+  });
+
+  it('enforces password minimum length requirements', () => {
+    function validatePassword(pwd) {
+      if (!pwd || typeof pwd !== 'string') return false;
+      return pwd.length >= 6;
+    }
+
+    assert.equal(validatePassword('12345'), false, '5 chars should be rejected');
+    assert.equal(validatePassword('123456'), true, '6 chars should pass');
+    assert.equal(validatePassword('SecurePass123!'), true, 'Strong password passes');
+    assert.equal(validatePassword(''), false, 'Empty password fails');
+  });
+
+  it('verifies password confirmation matching correctly', () => {
+    function checkPasswordsMatch(pwd, confirmPwd) {
+      return Boolean(pwd && confirmPwd && pwd === confirmPwd);
+    }
+
+    assert.equal(checkPasswordsMatch('secret123', 'secret123'), true);
+    assert.equal(checkPasswordsMatch('secret123', 'different'), false);
+    assert.equal(checkPasswordsMatch('secret123', ''), false);
+  });
+});
+
+describe('CampusPulse AuthStore Reactive State and Session Recovery', () => {
+  it('correctly reports isAuthenticated as false when no user is signed in', () => {
+    const store = new AuthStore();
+    store.currentUser = null;
+    assert.equal(store.isAuthenticated, false);
+    assert.equal(typeof store.isAuthenticated, 'boolean');
+  });
+
+  it('correctly reports isAuthenticated as true when a user is signed in', () => {
+    const store = new AuthStore();
+    store.currentUser = {
+      uid: 'student-test-123',
+      email: 'student@campus.edu',
+      displayName: 'Alex Chen',
+      token: 'jwt-xyz'
+    };
+    assert.equal(store.isAuthenticated, true);
+    assert.equal(typeof store.isAuthenticated, 'boolean');
+  });
+
+  it('returns valid token from getAuthToken when user has active token', async () => {
+    const store = new AuthStore();
+    store.currentUser = {
+      uid: 'user-456',
+      token: 'token-abc'
+    };
+    const token = await store.getAuthToken();
+    assert.equal(token, 'token-abc');
+
+    store.currentUser = null;
+    const noToken = await store.getAuthToken();
+    assert.equal(noToken, null);
+  });
+
+  it('notifies subscribers synchronously upon subscription and on state changes', () => {
+    const store = new AuthStore();
+    let callCount = 0;
+    let lastUser = null;
+
+    const unsubscribe = store.subscribe((s) => {
+      callCount++;
+      lastUser = s.currentUser;
+    });
+
+    assert.equal(callCount, 1, 'Subscriber should be invoked immediately on registration');
+    assert.equal(lastUser, null);
+
+    store.currentUser = { uid: 'user-789', displayName: 'Samira' };
+    store.notify();
+
+    assert.equal(callCount, 2);
+    assert.equal(lastUser.displayName, 'Samira');
+
+    unsubscribe();
+    store.notify();
+    assert.equal(callCount, 2, 'Unsubscribed listener must not receive further events');
   });
 });

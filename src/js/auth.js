@@ -6,6 +6,9 @@
 
 import {
   signInWithGooglePopup,
+  signInWithEmail,
+  signUpWithEmail,
+  sendPasswordReset,
   signOutFirebaseUser,
   subscribeAuthState,
   getFirebaseAuth
@@ -130,6 +133,79 @@ export class AuthStore {
   }
 
   /**
+   * Signs in using Firebase Email and Password.
+   *
+   * @param {string} email
+   * @param {string} password
+   * @returns {Promise<{ success: boolean, user?: object, error?: string }>}
+   */
+  async signInWithEmail(email, password) {
+    this.isLoading = true;
+    this.error = null;
+    this.notify();
+
+    const res = await signInWithEmail(email, password);
+
+    if (res.success && res.user) {
+      this.currentUser = res.user;
+      this.saveToStorage(this.currentUser);
+      this.isLoading = false;
+      this.notify();
+      return { success: true, user: this.currentUser };
+    }
+
+    this.isLoading = false;
+    this.error = res.error || 'Authentication failed.';
+    this.notify();
+    return {
+      success: false,
+      error: this.error
+    };
+  }
+
+  /**
+   * Registers a new account with Firebase Email, Password, and Display Name.
+   *
+   * @param {string} email
+   * @param {string} password
+   * @param {string} [displayName]
+   * @returns {Promise<{ success: boolean, user?: object, error?: string }>}
+   */
+  async signUpWithEmail(email, password, displayName = '') {
+    this.isLoading = true;
+    this.error = null;
+    this.notify();
+
+    const res = await signUpWithEmail(email, password, displayName);
+
+    if (res.success && res.user) {
+      this.currentUser = res.user;
+      this.saveToStorage(this.currentUser);
+      this.isLoading = false;
+      this.notify();
+      return { success: true, user: this.currentUser };
+    }
+
+    this.isLoading = false;
+    this.error = res.error || 'Account creation failed.';
+    this.notify();
+    return {
+      success: false,
+      error: this.error
+    };
+  }
+
+  /**
+   * Sends password reset instructions.
+   *
+   * @param {string} email
+   * @returns {Promise<{ success: boolean, message?: string, error?: string }>}
+   */
+  async resetPassword(email) {
+    return sendPasswordReset(email);
+  }
+
+  /**
    * Cleanly signs the user out, clearing memory, local storage, and Firebase session.
    */
   async signOut() {
@@ -180,7 +256,7 @@ export class AuthStore {
     return Boolean(this.currentUser);
   }
 
-  isAuthenticated() {
+  isLoggedIn() {
     return Boolean(this.currentUser);
   }
 

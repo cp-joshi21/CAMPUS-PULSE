@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CampusPulse - AI-powered campus information platform that converts unstructured college announcements into structured, searchable events.">
+  <meta name="description"
+    content="CampusPulse - AI-powered campus information platform that converts unstructured college announcements into structured, searchable events.">
   <title>CampusPulse — Everything happening on your campus. One intelligent place.</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230E7C86'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z'/></svg>">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230E7C86'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z'/></svg>">
   <link rel="stylesheet" href="/src/css/styles.css">
 </head>
+
 <body>
   <!-- Accessible Skip Link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -17,7 +21,8 @@
     <aside id="app-sidebar" class="app-sidebar" aria-label="Main Navigation">
       <div class="sidebar-brand">
         <div class="brand-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
           </svg>
         </div>
@@ -29,7 +34,8 @@
 
       <nav class="sidebar-nav" aria-label="Sidebar Sections">
         <a href="#dashboard" class="nav-link active" data-nav-target="dashboard" aria-current="page">
-          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
             <rect x="3" y="3" width="7" height="7"></rect>
             <rect x="14" y="3" width="7" height="7"></rect>
             <rect x="14" y="14" width="7" height="7"></rect>
@@ -39,7 +45,8 @@
         </a>
 
         <a href="#events" class="nav-link" data-nav-target="events">
-          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
             <line x1="8" y1="6" x2="21" y2="6"></line>
             <line x1="8" y1="12" x2="21" y2="12"></line>
             <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -51,7 +58,8 @@
         </a>
 
         <a href="#calendar" class="nav-link" data-nav-target="calendar">
-          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
             <line x1="16" y1="2" x2="16" y2="6"></line>
             <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -61,7 +69,8 @@
         </a>
 
         <a href="#tasks" class="nav-link" data-nav-target="tasks">
-          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
             <path d="M9 11l3 3L22 4"></path>
             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
           </svg>
@@ -70,7 +79,8 @@
         </a>
 
         <a href="#summary" class="nav-link" data-nav-target="summary">
-          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -90,10 +100,12 @@
     </aside>
 
     <!-- Main Content Area -->
+
     <div class="app-main">
       <!-- Header -->
       <header class="app-header" role="banner">
-        <button type="button" id="mobile-menu-btn" class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <button type="button" id="mobile-menu-btn" class="mobile-toggle" aria-label="Toggle navigation menu"
+          aria-expanded="false">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -108,16 +120,21 @@
 
         <div class="header-actions">
           <div class="search-box">
-            <label for="global-search-input" class="visually-hidden" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Search events</label>
-            <svg class="search-icon" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <label for="global-search-input" class="visually-hidden"
+              style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Search
+              events</label>
+            <svg class="search-icon" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="search" id="global-search-input" class="search-input" placeholder="Search notices, exams, seminars..." />
+            <input type="search" id="global-search-input" class="search-input"
+              placeholder="Search notices, exams, seminars..." />
           </div>
 
           <div class="header-user-wrapper" id="header-user-area">
-            <button type="button" id="btn-header-auth" class="btn btn-secondary btn-sm btn-auth-pill" aria-label="Account options">
+            <button type="button" id="btn-header-auth" class="btn btn-secondary btn-sm btn-auth-pill"
+              aria-label="Account options">
               <span class="user-avatar-initials" id="header-user-avatar" aria-hidden="true">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -134,7 +151,9 @@
       <main id="main-content" class="content-wrapper" role="main">
         <!-- Section: Dashboard Overview -->
         <section id="section-dashboard" aria-labelledby="dashboard-overview-heading">
-          <h2 id="dashboard-overview-heading" class="visually-hidden" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Dashboard Overview</h2>
+          <h2 id="dashboard-overview-heading" class="visually-hidden"
+            style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Dashboard
+            Overview</h2>
 
           <!-- Priority Overview (Metrics Bar) -->
           <div class="priority-overview" role="region" aria-label="Event priority counts">
@@ -207,23 +226,24 @@
                 <span>AI Ingestion Engine</span>
               </div>
               <h2 id="announcement-input-heading">Ingest Campus Notice or Message</h2>
-              <p class="announcement-subtitle">Paste unstructured circulars, WhatsApp broadcasts, or emails. Gemini AI will extract structured event data.</p>
+              <p class="announcement-subtitle">Paste unstructured circulars, WhatsApp broadcasts, or emails. Gemini AI
+                will extract structured event data.</p>
             </div>
           </div>
 
-          <label for="announcement-raw-text" class="visually-hidden" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Raw announcement text</label>
-          <textarea
-            id="announcement-raw-text"
-            class="announcement-textarea"
-            placeholder="Paste campus notice text here (e.g., 'All students are informed that the Annual Technical Fest will be held on Nov 15th at 10 AM in the Main Auditorium. Registration closes Nov 10th...')"
-          ></textarea>
+          <label for="announcement-raw-text" class="visually-hidden"
+            style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Raw announcement
+            text</label>
+          <textarea id="announcement-raw-text" class="announcement-textarea"
+            placeholder="Paste campus notice text here (e.g., 'All students are informed that the Annual Technical Fest will be held on Nov 15th at 10 AM in the Main Auditorium. Registration closes Nov 10th...')"></textarea>
 
           <div id="ai-extraction-status"></div>
 
           <div class="announcement-actions">
             <div class="announcement-btn-group">
               <button type="button" id="btn-paste-announcement" class="btn btn-secondary">
-                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
                   <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                   <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                 </svg>
@@ -235,8 +255,11 @@
             </div>
 
             <button type="button" id="btn-extract-ai" class="btn btn-primary">
-              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path
+                  d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83">
+                </path>
               </svg>
               <span>Extract with AI</span>
             </button>
@@ -246,7 +269,9 @@
         <!-- Section: Events Feed & Views -->
         <section id="section-events" aria-labelledby="events-feed-heading">
           <div class="toolbar-section">
-            <h2 id="events-feed-heading" class="visually-hidden" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Events Feed</h2>
+            <h2 id="events-feed-heading" class="visually-hidden"
+              style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Events Feed
+            </h2>
 
             <!-- Category Chips -->
             <div class="category-chips" role="group" aria-label="Filter events by category">
@@ -261,7 +286,9 @@
 
             <!-- View & Sort Controls -->
             <div class="view-controls">
-              <label for="sort-by-select" class="visually-hidden" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Sort events by</label>
+              <label for="sort-by-select" class="visually-hidden"
+                style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Sort events
+                by</label>
               <select id="sort-by-select" class="sort-select" aria-label="Sort events">
                 <option value="date-asc">Date: Soonest First</option>
                 <option value="date-desc">Date: Latest First</option>
@@ -271,7 +298,8 @@
 
               <div class="view-toggle-group" role="group" aria-label="View toggle">
                 <button type="button" id="btn-view-list" class="view-toggle-btn active" aria-pressed="true">
-                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
                     <line x1="8" y1="6" x2="21" y2="6"></line>
                     <line x1="8" y1="12" x2="21" y2="12"></line>
                     <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -282,7 +310,8 @@
                   List
                 </button>
                 <button type="button" id="btn-view-calendar" class="view-toggle-btn" aria-pressed="false">
-                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                     <line x1="16" y1="2" x2="16" y2="6"></line>
                     <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -300,7 +329,8 @@
             <div id="events-list" class="events-grid" role="region" aria-label="Events list"></div>
 
             <!-- Calendar View Container (initially hidden) -->
-            <div id="events-calendar-view" class="calendar-view-container is-hidden" aria-label="Calendar view" hidden></div>
+            <div id="events-calendar-view" class="calendar-view-container is-hidden" aria-label="Calendar view" hidden>
+            </div>
           </div>
         </section>
 
@@ -314,7 +344,8 @@
                   <span>Personal Academic Organizer</span>
                 </div>
                 <h2 id="tasks-heading">My Tasks &amp; Deadlines</h2>
-                <p class="announcement-subtitle">Personal academic tasks, assignment submissions, and follow-up reminders.</p>
+                <p class="announcement-subtitle">Personal academic tasks, assignment submissions, and follow-up
+                  reminders.</p>
               </div>
 
               <div class="task-filter-chips" role="group" aria-label="Filter tasks">
@@ -329,7 +360,8 @@
               <div class="add-task-grid">
                 <div class="form-group flex-2">
                   <label for="task-input-title" class="visually-hidden">Task description</label>
-                  <input type="text" id="task-input-title" class="form-input" placeholder="Add a new deadline or task (e.g. Submit CS assignment)..." required />
+                  <input type="text" id="task-input-title" class="form-input"
+                    placeholder="Add a new deadline or task (e.g. Submit CS assignment)..." required />
                 </div>
                 <div class="form-group flex-1">
                   <label for="task-input-date" class="visually-hidden">Due date</label>
@@ -345,7 +377,8 @@
                   </select>
                 </div>
                 <button type="submit" id="btn-add-task" class="btn btn-primary">
-                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
@@ -364,10 +397,12 @@
           <div class="summary-header">
             <div>
               <h2 id="summary-heading">Weekly Campus Executive Briefing</h2>
-              <p class="announcement-subtitle">AI-synthesized digest of high-priority deadlines and campus highlights.</p>
+              <p class="announcement-subtitle">AI-synthesized digest of high-priority deadlines and campus highlights.
+              </p>
             </div>
             <button type="button" id="btn-generate-summary" class="btn btn-secondary">
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
                 <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
               </svg>
               Generate Weekly Summary
@@ -376,7 +411,8 @@
 
           <div id="summary-content" class="summary-body">
             <p class="summary-text" style="color: var(--color-text-muted);">
-              Click "Generate Weekly Summary" above to synthesize all scheduled events into an executive briefing using Gemini AI.
+              Click "Generate Weekly Summary" above to synthesize all scheduled events into an executive briefing using
+              Gemini AI.
             </p>
           </div>
         </section>
@@ -392,10 +428,11 @@
   </dialog>
 
   <!-- Live Region Toast Container -->
-  <div id="toast-container" class="toast-container" role="region" aria-label="System notifications" aria-live="polite"></div>
+  <div id="toast-container" class="toast-container" role="region" aria-label="System notifications" aria-live="polite">
+  </div>
 
   <!-- Main Application Entry Point -->
   <script type="module" src="/src/main.js"></script>
 </body>
-</html>
 
+</html>
