@@ -7,7 +7,8 @@ import {
   classifyEventPriority,
   getPriorityWeight,
   sanitizeText,
-  truncateText
+  truncateText,
+  isSafeRedirectUrl
 } from '../src/js/utils.js';
 
 describe('CampusPulse Date Utilities', () => {
@@ -111,5 +112,31 @@ describe('CampusPulse Sanitization and Text Utilities', () => {
     const text = 'The quick brown fox jumps over the lazy dog';
     const truncated = truncateText(text, 20);
     assert.equal(truncated, 'The quick brown fox...');
+  });
+});
+
+describe('CampusPulse Redirect Security Utilities', () => {
+  it('accepts safe relative paths and in-app hashes', () => {
+    assert.equal(isSafeRedirectUrl('index.html'), true);
+    assert.equal(isSafeRedirectUrl('/index.html'), true);
+    assert.equal(isSafeRedirectUrl('/login.html'), true);
+    assert.equal(isSafeRedirectUrl('#events'), true);
+    assert.equal(isSafeRedirectUrl('/#tasks'), true);
+  });
+
+  it('rejects protocol-relative and scheme-based open redirect attempts', () => {
+    assert.equal(isSafeRedirectUrl('//evil.com'), false);
+    assert.equal(isSafeRedirectUrl('/\\evil.com'), false);
+    assert.equal(isSafeRedirectUrl('https://evil.com'), false);
+    assert.equal(isSafeRedirectUrl('http://attacker.org'), false);
+    assert.equal(isSafeRedirectUrl('javascript:alert(1)'), false);
+    assert.equal(isSafeRedirectUrl('data:text/html,malicious'), false);
+  });
+
+  it('rejects empty, null, and non-string redirect values', () => {
+    assert.equal(isSafeRedirectUrl(null), false);
+    assert.equal(isSafeRedirectUrl(undefined), false);
+    assert.equal(isSafeRedirectUrl(''), false);
+    assert.equal(isSafeRedirectUrl(123), false);
   });
 });

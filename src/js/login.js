@@ -5,6 +5,7 @@
  */
 
 import { authStore } from './auth.js';
+import { isSafeRedirectUrl } from './utils.js';
 
 class LoginController {
   constructor() {
@@ -32,6 +33,7 @@ class LoginController {
     // 2. Bind DOM events
     this.bindFormEvents();
     this.bindPasswordToggle();
+    this.bindForgotPassword();
     this.bindGoogleAuth();
 
     // 3. Pre-fill email if remembered
@@ -45,6 +47,35 @@ class LoginController {
     } catch {
       // Storage unavailable
     }
+  }
+
+  bindForgotPassword() {
+    const forgotBtn = document.getElementById('btn-forgot-password');
+    if (!forgotBtn) return;
+
+    forgotBtn.addEventListener('click', async () => {
+      this.clearAlert();
+      const email = this.emailInput?.value?.trim();
+      if (!email) {
+        this.showAlert('Please enter your university email above first, then click "Forgot password?".', 'error');
+        this.emailInput?.focus();
+        return;
+      }
+
+      forgotBtn.disabled = true;
+      const originalText = forgotBtn.textContent;
+      forgotBtn.textContent = 'Sending...';
+
+      const res = await authStore.resetPassword(email);
+      forgotBtn.disabled = false;
+      forgotBtn.textContent = originalText;
+
+      if (res.success) {
+        this.showAlert(res.message || 'Password reset link sent to your email. Please check your inbox.', 'success');
+      } else {
+        this.showAlert(res.error || 'Unable to send password reset email.', 'error');
+      }
+    });
   }
 
   bindPasswordToggle() {
@@ -180,10 +211,8 @@ class LoginController {
   redirectToApp() {
     try {
       const params = new URLSearchParams(window.location.search);
-      const redirect = params.get('redirect') || 'index.html';
-      // Sanitize redirect URL: only relative URLs starting with / or index.html allowed
-      const isSafe = redirect.startsWith('/') || redirect.startsWith('index.html') || redirect.startsWith('#');
-      window.location.href = isSafe ? redirect : 'index.html';
+      const redirect = params.get('redirect');
+      window.location.href = isSafeRedirectUrl(redirect) ? redirect : 'index.html';
     } catch {
       window.location.href = 'index.html';
     }

@@ -5,6 +5,7 @@
  */
 
 import { authStore } from './auth.js';
+import { isSafeRedirectUrl } from './utils.js';
 
 class SignupController {
   constructor() {
@@ -196,9 +197,8 @@ class SignupController {
   redirectToApp() {
     try {
       const params = new URLSearchParams(window.location.search);
-      const redirect = params.get('redirect') || 'index.html';
-      const isSafe = redirect.startsWith('/') || redirect.startsWith('index.html') || redirect.startsWith('#');
-      window.location.href = isSafe ? redirect : 'index.html';
+      const redirect = params.get('redirect');
+      window.location.href = isSafeRedirectUrl(redirect) ? redirect : 'index.html';
     } catch {
       window.location.href = 'index.html';
     }

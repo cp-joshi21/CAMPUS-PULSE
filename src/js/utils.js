@@ -285,3 +285,19 @@ export function debounce(func, wait = 250) {
   };
 }
 
+/**
+ * Validates a redirect URL against open-redirect vulnerabilities.
+ * Prevents protocol-relative URLs (//evil.com), backslash tricks (/\evil.com),
+ * and absolute scheme URLs (http:, https:, javascript:, data:).
+ *
+ * @param {string | null | undefined} url
+ * @returns {boolean}
+ */
+export function isSafeRedirectUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  const trimmed = url.trim();
+  if (!trimmed) return false;
+  if (trimmed.startsWith('//') || trimmed.startsWith('/\\') || trimmed.startsWith('\\')) return false;
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) return false;
+  return trimmed.startsWith('/') || trimmed.startsWith('index.html') || trimmed.startsWith('#');
+}
