@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 1. Campus Announcements & Events Collection
+    // Public read access restricted strictly to published campus events.
+    // Client-side direct write access (create, update, delete) is DENIED.
+    // All event publishing and archiving must go through Netlify Serverless Functions
+    // (Firebase Admin SDK), which enforces backend role authorization and input validation.
+    match /events/{eventId} {
+      allow read: if resource == null || resource.data.status == 'published';
+      allow write: if false; // Deny direct client-side creation, update, and deletion
+    }
+
+    // 2. User Profiles Collection
+    // Private user information accessible only by the owning authenticated student.
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId)
+        && request.resource.data.email is string
+        && request.resource.data.displayName is string
+        && request.resource.data.updatedAt is string;
+      allow delete: if false; // Prevent accidental client deletion of student profiles
+    }
+
+    // 3. Personal Tasks & Reminders Collection (Canonical: user_tasks)
+    // Strictly scoped to the authenticated student's unique UID.
+    // Prevents cross-user data access, tampering, or task theft.
+    match /user_tasks/{taskId} {
+      // Read: Only the owning student can read their personal tasks
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Create: Student can only create tasks for their own UID with valid field types
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 200
+        && request.resource.data.completed is bool
+        && request.resource.data.priority in ['urgent', 'upcoming', 'this-week', 'scheduled', 'expired', 'low', 'medium', 'high']
+        && request.resource.data.createdAt is string
+        && request.resource.data.updatedAt is string;
+
+      // Update: Student can only update their own task; userId is IMMUTABLE
+      allow update: if isAuthenticated()
+        && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == resource.data.userId // Enforce immutable owner
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 200
+        && request.resource.data.completed is bool
+        && request.resource.data.priority in ['urgent', 'upcoming', 'this-week', 'scheduled', 'expired', 'low', 'medium', 'high']
+        && request.resource.data.updatedAt is string;
+
+      // Delete: Student can only delete their own personal task
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // 4. Default Deny all unrecognized collections and operations
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

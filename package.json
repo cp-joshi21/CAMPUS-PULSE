@@ -1,0 +1,27 @@
+{
+  "name": "campus-pulse",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-powered campus information platform that converts unstructured college announcements into structured, searchable data.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@google/genai": "^2.32.0",
+    "firebase": "^13.1.0",
+    "firebase-admin": "^13.1.0"
+  },
+  "overrides": {
+    "@grpc/grpc-js": "^1.14.7"
+  },
+  "devDependencies": {
+    "vite": "^6.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
